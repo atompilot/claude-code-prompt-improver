@@ -1,12 +1,12 @@
 # Claude Code Prompt Improver
 
-An on-demand `/improve-prompt` command that enriches vague prompts before Claude Code executes them. Uses the AskUserQuestion tool (Claude Code 2.0.22+) for targeted clarifying questions.
+An on-demand `/prompt-improver` skill that enriches vague prompts before Claude Code executes them. Uses the AskUserQuestion tool (Claude Code 2.0.22+) for targeted clarifying questions.
 
-> Forked from [severity1/claude-code-prompt-improver](https://github.com/severity1/claude-code-prompt-improver). Changed from automatic hook mode to manual command mode — you decide when to improve a prompt.
+> Forked from [severity1/claude-code-prompt-improver](https://github.com/severity1/claude-code-prompt-improver). Changed from automatic hook mode to manual skill invocation — you decide when to improve a prompt.
 
 ## What It Does
 
-When you run `/improve-prompt`, Claude:
+When you run `/prompt-improver`, Claude:
 1. Researches your codebase, conversation history, and web for context
 2. Asks 1-6 grounded clarifying questions
 3. Executes the original request with full context
@@ -23,7 +23,7 @@ sequenceDiagram
     participant Skill
     participant Project
 
-    User->>Command: /improve-prompt "fix the bug"
+    User->>Command: /prompt-improver "fix the bug"
     Command->>Claude: Invoke prompt-improver skill
     Skill-->>Claude: Research and question guidance
     Claude->>Claude: Create research plan (TodoWrite)
@@ -65,14 +65,14 @@ Verify installation with `/plugin` command.
 ## Usage
 
 ```bash
-/improve-prompt fix the bug
-/improve-prompt add authentication
-/improve-prompt refactor the API
+/prompt-improver fix the bug
+/prompt-improver add authentication
+/prompt-improver refactor the API
 ```
 
 **Example — vague prompt:**
 ```
-/improve-prompt fix the error
+/prompt-improver fix the error
 ```
 
 Claude researches, then asks:
@@ -100,11 +100,6 @@ Use the prompt-improver skill to research and clarify: "add authentication"
 
 ## Architecture
 
-**Command (commands/improve-prompt.md):**
-- User invokes via `/improve-prompt [prompt]`
-- Skips clarity evaluation — user has opted in
-- Directly invokes the `prompt-improver` skill
-
 **Skill (skills/prompt-improver/) - Research & Question Logic:**
 - **SKILL.md**: Research and question workflow
   - 4-phase process: Research → Questions → Clarify → Execute
@@ -123,7 +118,7 @@ Use the prompt-improver skill to research and clarify: "add authentication"
 ## FAQ
 
 **Does this run on every prompt?**
-No. It only runs when you use `/improve-prompt`. Zero overhead on normal prompts.
+No. It only runs when you use `/prompt-improver`. Zero overhead on normal prompts.
 
 **Will it slow me down?**
 Only when you choose to use it. The research phase gathers context, then asks focused questions.

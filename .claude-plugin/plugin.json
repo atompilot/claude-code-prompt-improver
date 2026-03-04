@@ -1,11 +1,10 @@
 {
   "name": "prompt-improver",
-  "description": "On-demand prompt optimization via /improve-prompt command. Enriches vague prompts with research-based clarifying questions before execution.",
+  "description": "On-demand prompt optimization via /prompt-improver skill. Enriches vague prompts with research-based clarifying questions before execution.",
   "version": "1.0.0",
   "author": {
     "name": "atompilot"
   },
   "license": "MIT",
-  "skills": ["./skills/prompt-improver"],
-  "commands": ["./commands"]
+  "skills": ["./skills/prompt-improver"]
 }
