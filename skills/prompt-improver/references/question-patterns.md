@@ -151,34 +151,13 @@ Before formulating questions, verify:
 }
 ```
 
-**Template 2: Function/Method Selection**
-```json
-{
-  "question": "Which function needs the changes?",
-  "header": "Function",
-  "multiSelect": false,
-  "options": [
-    {
-      "label": "validateUser()",
-      "description": "Validates user credentials against database (auth.ts:45)"
-    },
-    {
-      "label": "authenticateToken()",
-      "description": "Verifies JWT token signature and expiration (auth.ts:89)"
-    },
-    {
-      "label": "refreshSession()",
-      "description": "Extends active session duration (auth.ts:134)"
-    }
-  ]
-}
-```
+**Other target templates:** Function/Method Selection (header: "Function", options list specific functions with file:line references).
 
 ### Approach/Implementation Questions
 
 **When:** Target is clear, but implementation approach is ambiguous
 
-**Template 1: Technical Approach**
+**Template: Technical Approach**
 ```json
 {
   "question": "Which authentication approach should we implement?",
@@ -201,34 +180,13 @@ Before formulating questions, verify:
 }
 ```
 
-**Template 2: Architectural Pattern**
-```json
-{
-  "question": "How should the validation logic be organized?",
-  "header": "Pattern",
-  "multiSelect": false,
-  "options": [
-    {
-      "label": "Middleware approach",
-      "description": "Create validation middleware that runs before route handlers. Reusable across routes, centralized error handling."
-    },
-    {
-      "label": "Service layer validation",
-      "description": "Add validation to UserService class methods. Closer to business logic, easier to test in isolation."
-    },
-    {
-      "label": "Schema-based validation",
-      "description": "Define JSON schemas and use validator library. Declarative, auto-generates documentation, type-safe with TypeScript."
-    }
-  ]
-}
-```
+**Other approach templates:** Architectural Pattern (header: "Pattern", options compare middleware vs service layer vs schema-based approaches with trade-offs).
 
 ### Scope Questions
 
 **When:** Unclear how much work should be done
 
-**Template 1: Feature Scope**
+**Template: Feature Scope**
 ```json
 {
   "question": "What scope should this refactoring cover?",
@@ -251,217 +209,19 @@ Before formulating questions, verify:
 }
 ```
 
-**Template 2: Test Coverage Scope**
-```json
-{
-  "question": "What level of test coverage should be added?",
-  "header": "Test scope",
-  "multiSelect": false,
-  "options": [
-    {
-      "label": "Happy path only",
-      "description": "Basic test for successful operation. Quick validation that feature works."
-    },
-    {
-      "label": "Happy path + error cases",
-      "description": "Success cases and expected errors (invalid input, not found, etc.). Comprehensive basic coverage."
-    },
-    {
-      "label": "Full coverage including edge cases",
-      "description": "Success, errors, edge cases (empty data, null values, rate limits, etc.). Production-ready coverage."
-    }
-  ]
-}
-```
+**Other scope templates:** Test Coverage Scope (header: "Test scope", options: happy path only / + error cases / full coverage with edge cases).
 
-### Priority/Order Questions
+### Other Question Categories
 
-**When:** Multiple tasks or unclear which to tackle first
+**Priority/Order** (header: "Priority" or "Order") — When multiple tasks exist, list them by severity with descriptions. Include dependency context.
 
-**Template 1: Task Priority**
-```json
-{
-  "question": "Which aspect should be addressed first?",
-  "header": "Priority",
-  "multiSelect": false,
-  "options": [
-    {
-      "label": "Fix security vulnerability",
-      "description": "SQL injection in user search (HIGH severity). Blocks production deployment."
-    },
-    {
-      "label": "Improve performance",
-      "description": "Optimize N+1 query in dashboard (MEDIUM severity). Affects user experience but not blocking."
-    },
-    {
-      "label": "Add documentation",
-      "description": "Document API endpoints (LOW severity). Important for maintainability but not urgent."
-    }
-  ]
-}
-```
-
-**Template 2: Feature Ordering**
-```json
-{
-  "question": "In what order should these features be implemented?",
-  "header": "Order",
-  "multiSelect": false,
-  "options": [
-    {
-      "label": "Auth → Dashboard → Export",
-      "description": "Build foundation first. Each feature depends on previous ones."
-    },
-    {
-      "label": "Dashboard → Auth → Export",
-      "description": "Get core functionality working, add security, then enhancements."
-    },
-    {
-      "label": "All in parallel",
-      "description": "Work on all features simultaneously. Faster but requires careful integration."
-    }
-  ]
-}
-```
-
-### Configuration Questions
-
-**When:** Implementation requires configuration choices
-
-**Template 1: Library/Tool Selection**
-```json
-{
-  "question": "Which validation library should be used?",
-  "header": "Library",
-  "multiSelect": false,
-  "options": [
-    {
-      "label": "Zod",
-      "description": "TypeScript-first schema validation. Excellent type inference, modern API. Already used in frontend."
-    },
-    {
-      "label": "Joi",
-      "description": "Mature validation library. Large ecosystem, extensive documentation. Used by many enterprise projects."
-    },
-    {
-      "label": "class-validator",
-      "description": "Decorator-based validation. Works well with TypeORM entities. Already in package.json."
-    }
-  ]
-}
-```
-
-**Template 2: Configuration Values**
-```json
-{
-  "question": "What timeout value should be configured?",
-  "header": "Timeout",
-  "multiSelect": false,
-  "options": [
-    {
-      "label": "5 seconds",
-      "description": "Aggressive timeout. Fast failures but might interrupt legitimate slow operations."
-    },
-    {
-      "label": "30 seconds",
-      "description": "Balanced timeout. Industry standard for API requests. Recommended for most use cases."
-    },
-    {
-      "label": "120 seconds",
-      "description": "Conservative timeout. Allows for slow operations (large file uploads, complex reports)."
-    }
-  ]
-}
-```
+**Configuration** (header: "Library", "Timeout", etc.) — For library/tool selection or configuration values. Always mention what's already in the project (e.g., "Already in package.json").
 
 ## Number of Questions Guidelines
 
-### 1-2 Questions: Simple Clarification
-
-**Use when:**
-- Single point of ambiguity
-- Binary or ternary choice
-- Target identification only
-
-**Example:**
-```json
-[
-  {
-    "question": "Which file should be modified?",
-    "header": "Target file",
-    "multiSelect": false,
-    "options": ["auth.ts", "middleware.ts", "session.ts"]
-  }
-]
-```
-
-### 3-4 Questions: Moderate Complexity
-
-**Use when:**
-- Multiple independent decisions needed
-- Approach and scope both unclear
-- Configuration plus implementation questions
-
-**Example:**
-```json
-[
-  {
-    "question": "Which component should handle validation?",
-    "header": "Component",
-    ...
-  },
-  {
-    "question": "What validation approach should be used?",
-    "header": "Approach",
-    ...
-  },
-  {
-    "question": "Should existing validation be preserved?",
-    "header": "Migration",
-    ...
-  }
-]
-```
-
-### 5-6 Questions: Complex Scenarios
-
-**Use when:**
-- Major feature with multiple architectural decisions
-- Multiple aspects needing clarification
-- Configuration, approach, scope, and priority all unclear
-
-**Important:** Only use 5-6 questions when truly necessary. Most scenarios should use 1-4 questions.
-
-**Example:**
-```json
-[
-  {
-    "question": "Which authentication method?",
-    "header": "Auth method",
-    ...
-  },
-  {
-    "question": "Where should tokens be stored?",
-    "header": "Token store",
-    ...
-  },
-  {
-    "question": "What scope for user roles?",
-    "header": "Role scope",
-    ...
-  },
-  {
-    "question": "How to handle existing sessions?",
-    "header": "Migration",
-    ...
-  },
-  {
-    "question": "Which database for sessions?",
-    "header": "Session DB",
-    ...
-  }
-]
-```
+- **1 question**: Single ambiguity — which file, which approach, or which scope (Quick Mode)
+- **2-3 questions**: Moderate complexity — approach + scope, or target + configuration
+- **4-6 questions**: Major features with multiple architectural decisions — use sparingly, most scenarios need 1-3
 
 ## Option Generation Best Practices
 

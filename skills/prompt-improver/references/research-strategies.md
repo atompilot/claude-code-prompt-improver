@@ -283,96 +283,16 @@ Research:
 
 ## Web Research for Best Practices
 
-### Strategy 1: Current Best Practices (WebSearch)
+**When to use:** Need current approaches, industry standards, or framework-specific guidance.
 
-**When to use:** Need current approaches, recent changes, industry standards
+**Tools:**
+- **WebSearch** — Current best practices, library comparisons, common solutions (e.g., "Node.js authentication best practices", "JWT vs session comparison")
+- **WebFetch** — Official framework documentation when specific API details are needed
 
-**Effective queries:**
-```
-# Framework-specific patterns
-"React authentication best practices 2024"
-"Express.js error handling patterns 2024"
-
-# Library comparisons
-"JWT vs session authentication comparison"
-"Joi vs Zod validation library comparison"
-
-# Implementation approaches
-"implement rate limiting Node.js"
-"database transaction patterns TypeScript"
-
-# Common problems
-"fix N+1 query problem TypeScript"
-"prevent SQL injection Node.js"
-```
-
-**Example:**
-```
-Prompt: "add authentication"
-
-Research:
-1. WebSearch: "Node.js authentication best practices 2024"
-2. Finding: Passport.js is mature, NextAuth.js is newer, JWT is standard
-3. WebSearch: "JWT vs session authentication comparison"
-4. Finding: JWT for stateless, sessions for simplicity
-5. Pattern: Choose based on project architecture (microservices → JWT)
-```
-
-### Strategy 2: Framework Documentation (WebFetch)
-
-**When to use:** Need official guidance for frameworks in use
-
-**Common documentation sites:**
-```
-# JavaScript/TypeScript
-https://developer.mozilla.org/docs/
-https://nodejs.org/docs/
-https://www.typescriptlang.org/docs/
-
-# Frameworks
-https://reactjs.org/docs/
-https://expressjs.com/
-https://nextjs.org/docs/
-
-# Tools
-https://jestjs.io/docs/
-https://prettier.io/docs/
-```
-
-**Example:**
-```
-Prompt: "update the middleware"
-
-Research:
-1. Read: package.json → Express.js 4.18.2
-2. WebFetch: "https://expressjs.com/en/guide/using-middleware.html"
-3. Finding: Express 4.x supports async middleware
-4. Pattern: Can use async/await instead of callbacks
-```
-
-### Strategy 3: Common Architectures (WebSearch + WebFetch)
-
-**When to use:** Implementing well-known patterns
-
-**Queries:**
-```
-"repository pattern TypeScript example"
-"MVC architecture Node.js best practices"
-"clean architecture Node.js implementation"
-"microservices patterns"
-```
-
-**Example:**
-```
-Prompt: "refactor data access"
-
-Research:
-1. WebSearch: "repository pattern TypeScript"
-2. Finding: Separate data access from business logic
-3. WebSearch: "repository pattern with dependency injection"
-4. Finding: Use interfaces for testability
-5. Pattern: UserRepository interface + implementation
-```
+**Tips:**
+- Include the current year in searches for up-to-date results
+- Combine with codebase research: check package.json for versions before searching docs
+- Focus searches on the project's specific stack rather than generic queries
 
 ## Conversation History Mining
 
@@ -620,22 +540,17 @@ After research, document findings:
 
 Before asking questions:
 
-- [ ] Created research plan with TodoWrite
+- [ ] Read CLAUDE.md first for project conventions and architecture
 - [ ] Checked conversation history for context
-- [ ] Explored codebase for existing patterns
-- [ ] Searched for similar implementations
+- [ ] Explored codebase for existing patterns (use Explore subagent for broad discovery)
 - [ ] Reviewed relevant documentation
 - [ ] Researched best practices (if needed)
-- [ ] Documented findings
-- [ ] Generated specific options from research
-- [ ] Verified each option is grounded in findings
-- [ ] Marked research phase complete in todo list
+- [ ] Documented findings and generated specific, grounded options
+- [ ] (Optional) Created research plan with TodoWrite for complex investigations
 
 **Critical Rules:**
 1. NEVER skip research phase
-2. ALWAYS ground questions in findings
-3. NEVER assume based on general knowledge
-4. ALWAYS use conversation history first
-5. DOCUMENT research findings before asking
-
-Research is the foundation of effective clarification. The quality of your questions depends entirely on the thoroughness of your research.
+2. Read CLAUDE.md before codebase exploration
+3. ALWAYS ground questions in findings, not assumptions
+4. ALWAYS check conversation history first
+5. Use Agent with `subagent_type=Explore` for broad codebase research

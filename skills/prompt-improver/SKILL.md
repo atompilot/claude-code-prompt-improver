@@ -7,12 +7,12 @@ description: This skill enriches vague prompts with targeted research and clarif
 
 ## Purpose
 
-Transform vague, ambiguous prompts into actionable, well-defined requests through systematic research and targeted clarification. This skill is invoked via the `/improve-prompt` command.
+Transform vague, ambiguous prompts into actionable, well-defined requests through systematic research and targeted clarification. This skill is invoked via the `/prompt-improver` command.
 
 ## When This Skill is Invoked
 
 **Via command:**
-- User runs `/improve-prompt [prompt]` to explicitly request prompt improvement
+- User runs `/prompt-improver [prompt]` to explicitly request prompt improvement
 - The command skips clarity evaluation and proceeds directly to research and clarification
 
 **Direct invocation:**
@@ -24,29 +24,42 @@ Transform vague, ambiguous prompts into actionable, well-defined requests throug
 - User has explicitly requested prompt improvement
 - Proceed directly to research and clarification
 
+## Quick Mode
+
+When the prompt has **only one clear ambiguity** (e.g., "which file?" or "which approach?"), skip the full 4-phase workflow:
+
+1. Identify the single ambiguity from conversation context or a quick codebase check
+2. Ask **1 question** via AskUserQuestion with 2-4 research-grounded options
+3. Execute immediately with the user's answer
+
+Use the full workflow below only when multiple aspects need clarification.
+
 ## Core Workflow
 
 This skill follows a 4-phase approach to prompt enrichment:
 
 ### Phase 1: Research
 
-Create a dynamic research plan using TodoWrite before asking questions.
+Plan your research approach (optionally use TodoWrite for complex investigations).
 
 **Research Plan Template:**
-1. **Check conversation history first** - Avoid redundant exploration if context already exists
-2. **Review codebase** if needed:
-   - Task/Explore for architecture and project structure
+1. **Read CLAUDE.md first** - Understand project conventions, architecture, and patterns before exploring
+2. **Check conversation history** - Avoid redundant exploration if context already exists
+3. **Review codebase** if needed:
+   - Use Agent tool with `subagent_type=Explore` for broad architecture discovery and pattern finding
    - Grep/Glob for specific patterns, related files
    - Check git log for recent changes
    - Search for errors, failing tests, TODO/FIXME comments
-3. **Gather additional context** as needed:
+4. **Gather additional context** as needed:
    - Read local documentation files
    - WebFetch for online documentation
    - WebSearch for best practices, common approaches, current information
-4. **Document findings** to ground questions in actual project context
+5. **Document findings** to ground questions in actual project context
 
 **Critical Rules:**
 - NEVER skip research
+- Read CLAUDE.md before exploring codebase — it contains project-specific conventions and architecture
+- Use Agent tool with `subagent_type=Explore` for broad codebase exploration (not manual Glob/Grep chains)
 - Check conversation history before exploring codebase
 - Questions must be grounded in actual findings, not assumptions or base knowledge
 
@@ -100,7 +113,7 @@ Execute the request as if it had been clear from the start.
 
 ### Example 1: Command Invocation → Research → Questions → Execution
 
-**User runs:** `/improve-prompt fix the bug`
+**User runs:** `/prompt-improver fix the bug`
 **Skill invoked:** Yes (user requested improvement)
 
 **Research plan:**
@@ -128,7 +141,7 @@ For comprehensive examples showing various prompt types and transformations, see
 
 ## Key Principles
 
-1. **Assume Vagueness**: Skill is invoked on-demand via `/improve-prompt` command
+1. **Assume Vagueness**: Skill is invoked on-demand via `/prompt-improver` command
 2. **Research First**: Always gather context before formulating questions
 3. **Ground Questions**: Use research findings, not assumptions or base knowledge
 4. **Be Specific**: Provide concrete options from actual codebase/context
