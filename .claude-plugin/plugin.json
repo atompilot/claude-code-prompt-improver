@@ -1,9 +1,11 @@
 {
   "name": "prompt-improver",
-  "description": "Intelligent prompt optimization using skill-based architecture. Enriches vague prompts with research-based clarifying questions before Claude Code executes them",
-  "version": "0.5.1",
+  "description": "On-demand prompt optimization via /improve-prompt command. Enriches vague prompts with research-based clarifying questions before execution.",
+  "version": "1.0.0",
   "author": {
-    "name": "severity1"
+    "name": "atompilot"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "skills": ["./skills/prompt-improver"],
+  "commands": ["./commands"]
 }

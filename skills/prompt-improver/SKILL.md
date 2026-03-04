@@ -7,23 +7,21 @@ description: This skill enriches vague prompts with targeted research and clarif
 
 ## Purpose
 
-Transform vague, ambiguous prompts into actionable, well-defined requests through systematic research and targeted clarification. This skill is invoked when the hook has already determined a prompt needs enrichment.
+Transform vague, ambiguous prompts into actionable, well-defined requests through systematic research and targeted clarification. This skill is invoked via the `/improve-prompt` command.
 
 ## When This Skill is Invoked
 
-**Automatic invocation:**
-- UserPromptSubmit hook evaluates prompt
-- Hook determines prompt is vague (missing specifics, context, or clear target)
-- Hook invokes this skill to guide research and questioning
+**Via command:**
+- User runs `/improve-prompt [prompt]` to explicitly request prompt improvement
+- The command skips clarity evaluation and proceeds directly to research and clarification
 
-**Manual invocation:**
+**Direct invocation:**
 - To enrich a vague prompt with research-based questions
 - When building or testing prompt evaluation systems
 - When prompt lacks sufficient context even with conversation history
 
 **Assumptions:**
-- Prompt has already been identified as vague
-- Evaluation phase is complete (done by hook)
+- User has explicitly requested prompt improvement
 - Proceed directly to research and clarification
 
 ## Core Workflow
@@ -100,11 +98,10 @@ Execute the request as if it had been clear from the start.
 
 ## Examples
 
-### Example 1: Skill Invocation → Research → Questions → Execution
+### Example 1: Command Invocation → Research → Questions → Execution
 
-**Hook evaluation:** Determined prompt is vague
-**Original prompt:** "fix the bug"
-**Skill invoked:** Yes (prompt lacks target and context)
+**User runs:** `/improve-prompt fix the bug`
+**Skill invoked:** Yes (user requested improvement)
 
 **Research plan:**
 1. Check conversation history for recent errors
@@ -127,22 +124,11 @@ Execute the request as if it had been clear from the start.
 
 **Execution:** Fix the error handling in auth.py:145 that's causing login failures
 
-### Example 2: Clear Prompt (Skill Not Invoked)
-
-**Original prompt:** "Refactor the getUserById function in src/api/users.ts to use async/await instead of promises"
-
-**Hook evaluation:** Passes all checks
-- Specific target: getUserById in src/api/users.ts
-- Clear action: refactor to async/await
-- Success criteria: use async/await instead of promises
-
-**Skill invoked:** No (prompt is clear, proceeds immediately without skill invocation)
-
 For comprehensive examples showing various prompt types and transformations, see [references/examples.md](references/examples.md).
 
 ## Key Principles
 
-1. **Assume Vagueness**: Skill is only invoked for vague prompts (evaluation done by hook)
+1. **Assume Vagueness**: Skill is invoked on-demand via `/improve-prompt` command
 2. **Research First**: Always gather context before formulating questions
 3. **Ground Questions**: Use research findings, not assumptions or base knowledge
 4. **Be Specific**: Provide concrete options from actual codebase/context
