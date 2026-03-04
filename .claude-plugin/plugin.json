@@ -1,6 +1,6 @@
 {
   "name": "prompt-improver",
-  "description": "On-demand prompt optimization via /prompt-improver skill. Enriches vague prompts with research-based clarifying questions before execution.",
+  "description": "On-demand prompt optimization — research codebase first, ask the right questions, execute with full context. 按需提示词优化：先调研代码库，再精准提问，最后带上下文执行。",
   "version": "1.0.0",
   "author": {
     "name": "atompilot"
